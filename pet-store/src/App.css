@@ -1,0 +1,31 @@
+.Carrusel {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin: 0 auto; /* Esto centrará el carrusel horizontalmente */
+}
+
+.ItemCarrusel {
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Esto asegura que el contenido del carrusel esté centrado */
+}
+
+.ImagenCarrusel {
+  display: flex;
+  align-items: center;
+  width: 600px;
+  height: 400px;
+  padding: 40px;
+}
+.Navbar {
+  background-color: rgb(251, 255, 14);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+body {
+  background-color: rgb(221, 230, 227);
+}
