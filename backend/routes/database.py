@@ -19,12 +19,12 @@ def get_connection():
         return None
 
 # Inicializa la base de datos
-# def init_db():
-#     try:
-#         engine = create_engine('oracle+cx_oracle://USUARIO_ELIO:admin@localhost:1521/XE')
-#         Base.metadata.create_all(engine)  # Crea las tablas en la base de datos
-#         Session = sessionmaker(bind=engine)
-#         return Session()  # Retorna una nueva sesión de la base de datos
-#     except Exception as e:
-#         print(f"Error al inicializar la base de datos: {e}")
-#         return None
+def init_db():
+    try:
+        engine = create_engine('oracle+cx_oracle://USUARIO_ELIO:admin@localhost:1521/XE')
+        Base.metadata.create_all(engine)  # Crea las tablas en la base de datos
+        Session = sessionmaker(bind=engine)
+        return Session()  # Retorna una nueva sesión de la base de datos
+    except Exception as e:
+        print(f"Error al inicializar la base de datos: {e}")
+        return None

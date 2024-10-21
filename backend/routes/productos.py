@@ -30,7 +30,16 @@ def add_producto():
         session = get_db_session()
         session.add(nuevo_producto)
         session.commit()
-        return jsonify({"message": "Producto agregado", "producto": nuevo_producto.__dict__}), 201
+
+        return jsonify({
+            "message": "Producto agregado",
+            "producto": {
+                "id": nuevo_producto.id,
+                "nombre": nuevo_producto.nombre,
+                "descripcion": nuevo_producto.descripcion,
+                "precio": nuevo_producto.precio
+            }
+        }), 201
     except Exception as e:
         return jsonify({"message": "Error al agregar producto", "error": str(e)}), 500
 
@@ -56,10 +65,15 @@ def update_producto(id):
             producto.descripcion = data.get('descripcion', producto.descripcion)
             producto.precio = data.get('precio', producto.precio)
             session.commit()
-            return jsonify({"message": "Producto actualizado", "producto": producto.__dict__})
+            
+            # Serializa el producto excluyendo '_sa_instance_state'
+            producto_dict = {k: v for k, v in producto.__dict__.items() if k != '_sa_instance_state'}
+            return jsonify({"message": "Producto actualizado", "producto": producto_dict})
+        
         return jsonify({"message": "Producto no encontrado"}), 404
     except Exception as e:
         return jsonify({"message": "Error al actualizar producto", "error": str(e)}), 500
+
 
 @productos_bp.route('/productos/<int:id>', methods=['DELETE'])
 def delete_producto(id):
