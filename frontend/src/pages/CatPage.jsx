@@ -1,14 +1,14 @@
-import React from 'react';
-import CatProducts from '../components/CatProducts';
+import React from "react";
+import CatProducts from "../componentes/CatProducts";
 
 const CatPage = () => {
-    return (
-        <div>
-            <h1>Bienvenido a la Página de Gatos</h1>
-            <CatProducts />
-        </div>
-    );
+  return (
+    <div>
+      <CatProducts />
+    </div>
+  );
 };
 
 export default CatPage;
+
 

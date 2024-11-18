@@ -16,11 +16,14 @@ def get_db_session():
 @productos_bp.route('/productos', methods=['GET'])
 def get_productos():
     try:
-        session = get_db_session()
-        productos = session.query(Producto).all()
-        return jsonify([producto.__dict__ for producto in productos if '_sa_instance_state' not in producto.__dict__])
+        session = get_db_session()  # Obtiene la sesión de la base de datos
+        productos = session.query(Producto).all()  # Consulta todos los productos
+        # Serializa los productos eliminando '_sa_instance_state'
+        return jsonify([producto.to_dict() for producto in productos])
     except Exception as e:
         return jsonify({"message": "Error al obtener productos", "error": str(e)}), 500
+
+
 
 @productos_bp.route('/productos', methods=['POST'])
 def add_producto():

@@ -1,26 +1,46 @@
-import React, { useContext } from 'react';
-import { Context } from './store/AppContext';
+import React, { useContext, useEffect } from "react";
+import { Context } from "../store/appContext";
 
 const DogProducts = () => {
-    const { store } = useContext(Context);
-    const dogProducts = store.products.filter(product => product.category === 'dog'); // Filtrar por categoría
+  const { store, actions } = useContext(Context);
 
-    return (
-        <div>
-            <h2>Productos para Perros</h2>
-            <ul>
-                {dogProducts.length > 0 ? (
-                    dogProducts.map((product) => (
-                        <li key={product.id}>
-                            {product.name} - ${product.price}
-                        </li>
-                    ))
-                ) : (
-                    <p>No hay productos disponibles para perros.</p>
-                )}
-            </ul>
-        </div>
-    );
+  useEffect(() => {
+    actions.getProductList(); // Obtener productos al cargar el componente
+  }, []);
+
+  return (
+    <div className="product-feed">
+      <h1>Productos para Perros</h1>
+      <div className="product-grid">
+        {store.filteredProducts
+          .filter((product) => product.tipo === "perro")
+          .map((product) => (
+            <div key={product.id} className="product-card">
+              <img
+                src="https://via.placeholder.com/200"
+                alt={product.nombre}
+                className="card-image"
+              />
+              <div className="card-body">
+                <h2 className="card-title">{product.nombre}</h2>
+                <p className="card-text">{product.descripcion}</p>
+                <p className="current-price">Precio: ${product.precio}</p>
+                <button
+                  className="add-to-cart-btn"
+                  onClick={() => actions.addToCart(product)}
+                >
+                  Agregar al carrito
+                </button>
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
+  );
 };
 
 export default DogProducts;
+
+
+  
+

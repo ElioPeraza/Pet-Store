@@ -1,12 +1,16 @@
 from flask import Flask, g
 from routes.productos import productos_bp
+from flask_cors import CORS
 # from backend.routes.database import init_db, get_connection
 
-app = Flask(__name__)
 
-@app.before_request
-def before_request():
-    pass# g.db_session = init_db()  # Inicializa la sesión antes de cada solicitud
+
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+
+# @app.before_request
+# def before_request():
+#     pass# g.db_session = init_db()  # Inicializa la sesión antes de cada solicitud
 
 @app.teardown_request
 def teardown_request(exception):
