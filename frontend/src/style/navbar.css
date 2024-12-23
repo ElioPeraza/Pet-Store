@@ -78,3 +78,23 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
   
+  .navbar-logo {
+    width: 30px; /* Tamaño más pequeño */
+    height: 30px;
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+    vertical-align: middle; /* Alinea verticalmente con el texto */
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el logo y el texto */
+    text-decoration: none;
+    color: #333;
+    font-size: 1.5rem; /* Tamaño del texto */
+  }
+  
+  .navbar-brand span {
+    font-weight: bold;
+    line-height: 1; /* Ajusta la altura de la línea */
+  }
+  

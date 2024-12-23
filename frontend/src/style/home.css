@@ -73,3 +73,21 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
   
+  .ad-slide {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ad-slide h3 {
+    color: #333;
+    font-size: 1.5rem;
+  }
+  
+  .ad-slide p {
+    color: #666;
+    font-size: 1rem;
+  }
+  
