@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-
+import { Link } from "react-router-dom"; // Para manejar rutas
+import "../style/productGrid.css";
 const FishProducts = () => {
   const { store, actions } = useContext(Context);
 
@@ -16,13 +17,17 @@ const FishProducts = () => {
           .filter((product) => product.tipo === "pez")
           .map((product) => (
             <div key={product.id} className="product-card">
-              <img
-                src="https://via.placeholder.com/200"
-                alt={product.nombre}
-                className="card-image"
-              />
+              <Link to={`/product/${product.id}`}>
+                <img
+                  src="https://via.placeholder.com/200"
+                  alt={product.nombre}
+                  className="card-image"
+                />
+              </Link>
               <div className="card-body">
-                <h2 className="card-title">{product.nombre}</h2>
+                <Link to={`/product/${product.id}`}>
+                  <h2 className="card-title">{product.nombre}</h2>
+                </Link>
                 <p className="card-text">{product.descripcion}</p>
                 <p className="current-price">Precio: ${product.precio}</p>
                 <button
@@ -40,5 +45,3 @@ const FishProducts = () => {
 };
 
 export default FishProducts;
-
-

@@ -1,0 +1,80 @@
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4CAF50; /* Fondo verde */
+    padding: 15px 20px;
+    color: #FFFFFF; /* Texto blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Logo de la marca */
+  .navbar-brand {
+    font-size: 28px;
+    font-weight: bold;
+    color: #FFEB3B; /* Amarillo */
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Links de navegación (centro) */
+  .navbar-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar-link {
+    color: #FFFFFF; /* Blanco */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .navbar-link:hover {
+    background-color: #FF9800; /* Fondo naranja */
+    color: #333333; /* Texto gris oscuro */
+  }
+  
+  /* Carrito (parte derecha) */
+  .navbar-right {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos */
+    gap: 20px;
+  }
+  
+  .navbar-cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .navbar-cart:hover {
+    transform: scale(1.1); /* Aumenta ligeramente al pasar el ratón */
+  }
+  
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #FF0000; /* Rojo para el contador */
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 5px 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  

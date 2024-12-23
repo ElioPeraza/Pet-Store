@@ -1,5 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom"; // Importamos Link para las rutas
+import "../style/productGrid.css";
+
 
 const CatProducts = () => {
   const { store, actions } = useContext(Context);
@@ -9,7 +12,6 @@ const CatProducts = () => {
       console.error("Error al cargar productos:", error);
     });
   }, []);
-  
 
   return (
     <div className="product-feed">
@@ -19,13 +21,17 @@ const CatProducts = () => {
           .filter((product) => product.tipo === "gato")
           .map((product) => (
             <div key={product.id} className="product-card">
-              <img
-                src="https://via.placeholder.com/200"
-                alt={product.nombre}
-                className="card-image"
-              />
+              <Link to={`/product/${product.id}`}>
+                <img
+                  src="https://via.placeholder.com/200"
+                  alt={product.nombre}
+                  className="card-image"
+                />
+              </Link>
               <div className="card-body">
-                <h2 className="card-title">{product.nombre}</h2>
+                <Link to={`/product/${product.id}`}>
+                  <h2 className="card-title">{product.nombre}</h2>
+                </Link>
                 <p className="card-text">{product.descripcion}</p>
                 <p className="current-price">Precio: ${product.precio}</p>
                 <button
@@ -43,9 +49,3 @@ const CatProducts = () => {
 };
 
 export default CatProducts;
-
-
-
-
-
-
