@@ -1,46 +1,68 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom"; // Importamos Link para manejar rutas
+import { Link } from "react-router-dom";
 import "../style/productGrid.css";
+
+// Importar imágenes de productos para perros
+import img1 from "../assets/img/dogproducts/abrigo-impermeable-para-perros.png";
+import img2 from "../assets/img/dogproducts/botella-portatil-de-agua.png";
+import img3 from "../assets/img/dogproducts/cama-ortopedica.png";
+import img4 from "../assets/img/dogproducts/collar-ajustable.png";
+import img5 from "../assets/img/dogproducts/comida-premium-para-perros.png";
+import img6 from "../assets/img/dogproducts/correa-extensible.png";
+import img7 from "../assets/img/dogproducts/juguete-interactivo-para-perros.png";
+import img8 from "../assets/img/dogproducts/juguete-masticable.png";
+import img9 from "../assets/img/dogproducts/snack-para-entrenamiento.png";
+import img10 from "../assets/img/dogproducts/trasportadora-para-perros.png";
+
+// Mapeo de imágenes según el nombre del producto
+const productImages = {
+  "Abrigo impermeable para perros": img1,
+  "Botella portátil de agua": img2,
+  "Cama ortopédica": img3,
+  "Collar ajustable": img4,
+  "Comida premium para perros": img5,
+  "Correa extensible": img6,
+  "Juguete interactivo para perros": img7,
+  "Juguete masticable": img8,
+  "Snack para entrenamiento": img9,
+  "Transportadora para perros": img10,
+};
 
 const DogProducts = () => {
   const { store, actions } = useContext(Context);
-  const [searchText, setSearchText] = useState(""); // Texto de búsqueda
-  const [suggestions, setSuggestions] = useState([]); // Sugerencias para autocompletar
+  const [searchText, setSearchText] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    actions.getProductList(); // Obtener productos al cargar el componente
+    actions.getProductList();
   }, []);
 
-  // Manejar cambios en la barra de búsqueda
   const handleSearchChange = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchText(value);
 
     if (value) {
-      // Filtrar sugerencias según el texto ingresado
       const filtered = store.filteredProducts.filter(
         (product) =>
           product.tipo === "perro" &&
           product.nombre.toLowerCase().includes(value)
       );
-      setSuggestions(filtered.slice(0, 5)); // Mostrar un máximo de 5 sugerencias
+      setSuggestions(filtered.slice(0, 5));
     } else {
       setSuggestions([]);
     }
   };
 
-  // Seleccionar un producto desde las sugerencias
   const handleSuggestionClick = (nombre) => {
     setSearchText(nombre);
-    setSuggestions([]); // Limpiar sugerencias al seleccionar
+    setSuggestions([]);
   };
 
   return (
     <div className="product-feed">
       <h1>Productos para Perros</h1>
 
-      {/* Barra de búsqueda */}
       <div className="search-bar">
         <input
           type="text"
@@ -64,7 +86,6 @@ const DogProducts = () => {
         )}
       </div>
 
-      {/* Lista de productos */}
       <div className="product-grid">
         {store.filteredProducts
           .filter(
@@ -76,7 +97,7 @@ const DogProducts = () => {
             <div key={product.id} className="product-card">
               <Link to={`/product/${product.id}`}>
                 <img
-                  src="https://via.placeholder.com/200"
+                  src={productImages[product.nombre] || "https://via.placeholder.com/200"}
                   alt={product.nombre}
                   className="card-image"
                 />

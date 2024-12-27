@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, g
-# from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 from models import Producto
 from . import database as db
 
@@ -7,43 +7,42 @@ productos_bp = Blueprint('productos', __name__)
 
 def get_db_session():
     if 'db_session' not in g:
-        print('db_session antes de bdsession')
         g.db_session = db.init_db()
-        print('despues de db session')
-        
     return g.db_session
+
+@productos_bp.teardown_app_request
+def teardown_db_session(exception):
+    session = g.pop('db_session', None)
+    if session:
+        if exception:
+            session.rollback()
+        session.close()
 
 @productos_bp.route('/productos', methods=['GET'])
 def get_productos():
     try:
-        session = get_db_session()  # Obtiene la sesión de la base de datos
-        productos = session.query(Producto).all()  # Consulta todos los productos
-        # Serializa los productos eliminando '_sa_instance_state'
+        session = get_db_session()
+        productos = session.query(Producto).all()
         return jsonify([producto.to_dict() for producto in productos])
-    except Exception as e:
+    except SQLAlchemyError as e:
+        session.rollback()
         return jsonify({"message": "Error al obtener productos", "error": str(e)}), 500
-
-
 
 @productos_bp.route('/productos', methods=['POST'])
 def add_producto():
     try:
         data = request.get_json()
-        nuevo_producto = Producto(nombre=data['nombre'], descripcion=data.get('descripcion'), precio=data['precio'])
+        nuevo_producto = Producto(
+            nombre=data['nombre'],
+            descripcion=data.get('descripcion'),
+            precio=data['precio']
+        )
         session = get_db_session()
         session.add(nuevo_producto)
         session.commit()
-
-        return jsonify({
-            "message": "Producto agregado",
-            "producto": {
-                "id": nuevo_producto.id,
-                "nombre": nuevo_producto.nombre,
-                "descripcion": nuevo_producto.descripcion,
-                "precio": nuevo_producto.precio
-            }
-        }), 201
-    except Exception as e:
+        return jsonify(nuevo_producto.to_dict()), 201
+    except SQLAlchemyError as e:
+        session.rollback()
         return jsonify({"message": "Error al agregar producto", "error": str(e)}), 500
 
 @productos_bp.route('/productos/<int:id>', methods=['GET'])
@@ -52,9 +51,10 @@ def get_producto(id):
         session = get_db_session()
         producto = session.query(Producto).filter(Producto.id == id).first()
         if producto:
-            return jsonify(producto.__dict__)
+            return jsonify(producto.to_dict())
         return jsonify({"message": "Producto no encontrado"}), 404
-    except Exception as e:
+    except SQLAlchemyError as e:
+        session.rollback()
         return jsonify({"message": "Error al obtener producto", "error": str(e)}), 500
 
 @productos_bp.route('/productos/<int:id>', methods=['PUT'])
@@ -68,15 +68,11 @@ def update_producto(id):
             producto.descripcion = data.get('descripcion', producto.descripcion)
             producto.precio = data.get('precio', producto.precio)
             session.commit()
-            
-            # Serializa el producto excluyendo '_sa_instance_state'
-            producto_dict = {k: v for k, v in producto.__dict__.items() if k != '_sa_instance_state'}
-            return jsonify({"message": "Producto actualizado", "producto": producto_dict})
-        
+            return jsonify(producto.to_dict())
         return jsonify({"message": "Producto no encontrado"}), 404
-    except Exception as e:
+    except SQLAlchemyError as e:
+        session.rollback()
         return jsonify({"message": "Error al actualizar producto", "error": str(e)}), 500
-
 
 @productos_bp.route('/productos/<int:id>', methods=['DELETE'])
 def delete_producto(id):
@@ -88,5 +84,6 @@ def delete_producto(id):
             session.commit()
             return jsonify({"message": "Producto eliminado"})
         return jsonify({"message": "Producto no encontrado"}), 404
-    except Exception as e:
+    except SQLAlchemyError as e:
+        session.rollback()
         return jsonify({"message": "Error al eliminar producto", "error": str(e)}), 500

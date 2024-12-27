@@ -1,23 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import '../style/navbar.css';
-import logo from '../assets/img/logo.jpg'; // Asegúrate de tener el logo en esta ruta
+import "../style/navbar.css";
+import logo from "../assets/img/logo.jpg";
 
 const Navbar = () => {
   const { store } = useContext(Context);
+  const [user, setUser] = useState(null);
+
+  // Verificar si hay un usuario almacenado en localStorage al cargar el componente
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      setUser(JSON.parse(loggedInUser)); // Establecer el usuario desde localStorage
+    }
+  }, []);
+
+  // Manejar el cierre de sesión
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // Eliminar el usuario del localStorage
+    setUser(null); // Restablecer el estado del usuario
+    window.location.href = "/"; // Redirigir al home
+  };
 
   return (
     <nav className="navbar">
-      {/* Logo */}
       <div className="navbar-left">
         <Link to="/" className="navbar-brand">
           <img src={logo} alt="Logo Huella Animal" className="navbar-logo" />
-          <span>Huella Animal</span>
+          Huella Animal
         </Link>
       </div>
-
-      {/* Enlaces */}
       <div className="navbar-center">
         <Link to="/gatos" className="navbar-link">
           Gatos
@@ -29,18 +42,27 @@ const Navbar = () => {
           Peces
         </Link>
       </div>
-
-      {/* Carrito e inicio de sesión */}
       <div className="navbar-right">
         <Link to="/carrito" className="navbar-cart">
           🛒 <span className="cart-count">{store.cart.length}</span>
         </Link>
-        <Link to="/login" className="navbar-link">
-          Iniciar Sesión
-        </Link>
-        <Link to="/registro" className="navbar-link">
-          Registrarse
-        </Link>
+        {user ? (
+          <>
+            <span className="navbar-user">Hola, {user.username}</span>
+            <button onClick={handleLogout} className="logout-button">
+              Cerrar Sesión
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="navbar-link">
+              Iniciar Sesión
+            </Link>
+            <Link to="/registro" className="navbar-link">
+              Registrarse
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

@@ -1,100 +1,96 @@
-/* Navbar */
+/* Navbar principal */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4CAF50; /* Fondo verde */
-    padding: 15px 20px;
-    color: #FFFFFF; /* Texto blanco */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-  
-  /* Logo de la marca */
-  .navbar-brand {
-    font-size: 28px;
-    font-weight: bold;
-    color: #FFEB3B; /* Amarillo */
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  /* Links de navegación (centro) */
-  .navbar-links {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .navbar-link {
-    color: #FFFFFF; /* Blanco */
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .navbar-link:hover {
-    background-color: #FF9800; /* Fondo naranja */
-    color: #333333; /* Texto gris oscuro */
-  }
-  
-  /* Carrito (parte derecha) */
-  .navbar-right {
-    display: flex;
-    align-items: center; /* Alinea verticalmente los elementos */
-    gap: 20px;
-  }
-  
-  .navbar-cart {
-    position: relative;
-    display: flex;
-    align-items: center;
-    color: #FFFFFF;
-    font-size: 18px;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    cursor: pointer;
-  }
-  
-  .navbar-cart:hover {
-    transform: scale(1.1); /* Aumenta ligeramente al pasar el ratón */
-  }
-  
-  .cart-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background-color: #FF0000; /* Rojo para el contador */
-    color: #FFFFFF;
-    font-weight: bold;
-    font-size: 12px;
-    border-radius: 50%;
-    padding: 5px 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  .navbar-logo {
-    width: 30px; /* Tamaño más pequeño */
-    height: 30px;
-    margin-right: 10px; /* Espacio entre el logo y el texto */
-    vertical-align: middle; /* Alinea verticalmente con el texto */
-  }
-  
-  .navbar-brand {
-    display: flex;
-    align-items: center; /* Alinea verticalmente el logo y el texto */
-    text-decoration: none;
-    color: #333;
-    font-size: 1.5rem; /* Tamaño del texto */
-  }
-  
-  .navbar-brand span {
-    font-weight: bold;
-    line-height: 1; /* Ajusta la altura de la línea */
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4CAF50; /* Fondo verde */
+  padding: 10px 20px; /* Reducir padding para mejor ajuste */
+  color: #FFFFFF; /* Texto blanco */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Logo y marca */
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  width: 40px; /* Ajustar tamaño máximo */
+  height: 40px; /* Ajustar tamaño máximo */
+  object-fit: contain; /* Asegurar proporciones correctas */
+  margin-right: 10px; /* Espaciado entre logo y texto */
+  border-radius: 5px; /* Opción para esquinas redondeadas */
+}
+
+/* Texto de la marca */
+.navbar-brand {
+  color: #FFEB3B; /* Amarillo */
+  font-size: 1.5rem; /* Tamaño del texto */
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  align-items: center; /* Alinea texto con el logo */
+}
+
+/* Links de navegación */
+.navbar-center {
+  display: flex;
+  gap: 20px; /* Espaciado entre links */
+}
+
+.navbar-link {
+  color: #FFFFFF; /* Blanco */
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #FF9800; /* Fondo naranja */
+  color: #333333; /* Texto gris oscuro */
+}
+
+/* Carrito y parte derecha */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaciado entre los elementos */
+}
+
+.navbar-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.navbar-cart:hover {
+  transform: scale(1.1); /* Efecto de aumento al pasar el ratón */
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #FF0000; /* Fondo rojo */
+  color: #FFFFFF; /* Texto blanco */
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 5px 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

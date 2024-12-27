@@ -7,10 +7,11 @@ import DogPage from "./pages/DogPage";
 import FishPage from "./pages/FishPage";
 import ProductDetail from "./componentes/ProductDetail"; // Importamos ProductDetail
 import CartPage from "./pages/CartPage";
+import Login from "./componentes/Login"; // Importamos la página de Login
+import Registro from "./componentes/Registro"; // Importamos la página de Registro
 import Footer from "./componentes/Footer";
 import NotFound from "./componentes/NotFound";
 import injectContext from "./store/appContext";
-
 
 const App = () => {
   return (
@@ -28,6 +29,8 @@ const App = () => {
             <Route path="/peces" element={<FishPage />} />
             <Route path="/carrito" element={<CartPage />} />
             <Route path="/product/:id" element={<ProductDetail />} /> {/* Ruta para el detalle del producto */}
+            <Route path="/login" element={<Login />} /> {/* Ruta de Login */}
+            <Route path="/registro" element={<Registro />} /> {/* Ruta de Registro */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
