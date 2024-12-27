@@ -3,8 +3,8 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../style/productGrid.css";
 
-// Importar explícitamente las imágenesS
-import img1 from "../assets/img/catproducts/Arena-premiun-para-gatos.png"
+// Importar explícitamente las imágenes de productos para gatos
+import img1 from "../assets/img/catproducts/Arena-premiun-para-gatos.png";
 import img2 from "../assets/img/catproducts/Cama-para-gatos.png";
 import img3 from "../assets/img/catproducts/Cama-para-gatos2.png";
 import img4 from "../assets/img/catproducts/Casita-para-gatos.png";
@@ -15,8 +15,7 @@ import img8 from "../assets/img/catproducts/Juguete-interactivo-para-gatos.png";
 import img9 from "../assets/img/catproducts/Rascador-de-lujo.png";
 import img10 from "../assets/img/catproducts/Snacks-saludables-para-gatos.png";
 
-
-// Objeto para asociar imágenes a productos
+// Mapeo de imágenes según el nombre del producto
 const productImages = {
   "Arena premium para gatos": img1,
   "Cama para gatos": img2,
@@ -32,42 +31,43 @@ const productImages = {
 
 const CatProducts = () => {
   const { store, actions } = useContext(Context);
-  const [searchText, setSearchText] = useState(""); // Estado para la búsqueda
-  const [suggestions, setSuggestions] = useState([]); // Estado para las sugerencias
+  const [searchText, setSearchText] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
-  // Cargar la lista de productos al montar el componente
   useEffect(() => {
-    actions.getProductList().catch((error) => {
-      console.error("Error al cargar productos:", error);
-    });
-  }, [actions]);
+    actions.getProductList();
+  }, []); // Removida la dependencia de actions
 
-  // Manejar cambios en la barra de búsqueda
   const handleSearchChange = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchText(value);
 
     if (value) {
-      const filtered = store.filteredProducts.filter((product) =>
-        product.nombre.toLowerCase().includes(value)
+      const filtered = store.filteredProducts.filter(
+        (product) =>
+          product.tipo === "gato" &&
+          product.nombre.toLowerCase().includes(value)
       );
-      setSuggestions(filtered.slice(0, 5)); // Mostrar un máximo de 5 sugerencias
+      setSuggestions(filtered.slice(0, 5));
     } else {
       setSuggestions([]);
     }
   };
 
-  // Seleccionar una sugerencia
   const handleSuggestionClick = (nombre) => {
     setSearchText(nombre);
-    setSuggestions([]); // Limpiar sugerencias al seleccionar
+    setSuggestions([]);
+  };
+
+  const handleAddToCart = (product) => {
+    console.log('Adding product to cart:', product); // Debug log
+    actions.addToCart(product);
   };
 
   return (
     <div className="product-feed">
       <h1>Productos para Gatos</h1>
 
-      {/* Barra de búsqueda */}
       <div className="search-bar">
         <input
           type="text"
@@ -91,7 +91,6 @@ const CatProducts = () => {
         )}
       </div>
 
-      {/* Lista de productos */}
       <div className="product-grid">
         {store.filteredProducts
           .filter(
@@ -116,7 +115,7 @@ const CatProducts = () => {
                 <p className="current-price">Precio: ${product.precio}</p>
                 <button
                   className="add-to-cart-btn"
-                  onClick={() => actions.addToCart(product)}
+                  onClick={() => handleAddToCart(product)}
                 >
                   Agregar al carrito
                 </button>

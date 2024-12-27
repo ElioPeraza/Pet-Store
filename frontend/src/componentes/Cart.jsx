@@ -1,25 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../style/cart.css";
 
 const Cart = () => {
     const { store, actions } = useContext(Context);
 
+    useEffect(() => {
+        // Cargar carrito desde localStorage al montar el componente
+        const storedCart = JSON.parse(localStorage.getItem("cart"));
+        if (storedCart) {
+            actions.setCart(storedCart); // Sincronizar con el estado global
+        }
+    }, []);
+
     const handleRemove = (productId) => {
-        actions.removeFromCart(productId); // Elimina el producto del carrito
+        actions.removeFromCart(productId);
     };
 
     const handleClearCart = () => {
-        actions.clearCart(); // Vacía el carrito
+        actions.clearCart();
     };
 
-    const total = actions.calculateCartTotal(); // Calcula el total del carrito
+    const total = actions.calculateCartTotal();
 
     return (
         <div className="cart-container">
             <h1>Carrito de Compras</h1>
             {store.cart.length === 0 ? (
-                <p>El carrito está vacío</p>
+                <p>Tu carrito está vacío. ¡Agrega productos para comenzar!</p>
             ) : (
                 <>
                     <ul className="cart-items">
